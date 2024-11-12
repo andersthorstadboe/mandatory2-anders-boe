@@ -352,6 +352,7 @@ class NeumannLegendre(Composite, Legendre):
     def __init__(self, N, domain=(-1, 1), bc=(0, 0), constraint=0):
         Legendre.__init__(self, N, domain=domain)
         self.B = Neumann(bc, domain, self.reference_domain)
+
         # Setting j for all basis functions 1,...,N for assembling the stencil matrix
         j = np.arange(N+1)
         self.S = sparse.diags((1, -j*(j+1)/((j+2)*(j+3))), (0, 2), shape=(N+1, N+3), format='csr')
@@ -380,6 +381,7 @@ class NeumannChebyshev(Composite, Chebyshev):
     def __init__(self, N, domain=(-1, 1), bc=(0, 0), constraint=0):
         Chebyshev.__init__(self, N, domain=domain)
         self.B = Neumann(bc, domain, self.reference_domain)
+        
         # Setting j for all basis functions 1,...,N for assembling the stencil matrix
         j = np.arange(N+1)
         self.S = sparse.diags((1, -((j/(j+2))**2)), (0, 2), (N+1, N+3), format='csr')
